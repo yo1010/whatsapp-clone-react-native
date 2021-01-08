@@ -2,13 +2,13 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
-import { View } from '../components/Themed';
+import { View } from 'react-native';
 import Colors from '../constants/Colors';
 import { Octicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
-import BottomTabNavigator from './BottomTabNavigator';
+import MainTabNavigator from './MainTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 
 // If you are not familiar with React Navigation, we recommend going through the
@@ -31,20 +31,24 @@ const RootNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{
       headerStyle: {
-        backgroundColor: Colors.light.tint
+        backgroundColor: Colors.light.tint,
+        shadowOpacity: 0
       },
       headerTintColor: Colors.light.background,
-      headerTitleAlign: 'left'
+      headerTitleAlign: 'left',
+      headerTitleStyle: {
+        fontSize: 23
+      }
     }}>
       <Stack.Screen
         name="Root"
-        component={BottomTabNavigator} 
+        component={MainTabNavigator} 
         options={{
           title: 'Whatsapp',
           headerRight: () => (
-            <View>
-              <Octicons name="search" size={24} />
-              <MaterialCommunityIcons name="dots-vertical" size={24} />
+            <View style={{ flexDirection: 'row', width: 60, justifyContent: 'space-around' }}>
+              <Octicons name="search" size={23} color='white' />
+              <MaterialCommunityIcons name="dots-vertical" size={23} color='white' />
             </View>
           )
         }}
