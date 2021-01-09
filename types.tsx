@@ -10,12 +10,8 @@ export type MainTabParamList = {
   'Calls': undefined;
 };
 
-export type TabOneParamList = {
-  TabOneScreen: undefined;
-};
-
-export type TabTwoParamList = {
-  TabTwoScreen: undefined;
+export type ChatTabParamList = {
+  Chat: undefined;
 };
 
 export type User = {
@@ -27,11 +23,11 @@ export type User = {
 export type Message = {
   id: string;
   content: string;
-  createdAt: number;
+  createdAt: string;
 };
 
 export type ChatRoom = {
   id: string;
-  users: [User];
-  lastMesage: Message;
+  users: User[];
+  lastMessage: Message;
 };

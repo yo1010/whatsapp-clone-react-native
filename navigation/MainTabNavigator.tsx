@@ -5,8 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ChatScreen from '../screens/ChatScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
-import { MainTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import { MainTabParamList, ChatTabParamList } from '../types';
 
 const MainTab = createMaterialTopTabNavigator<MainTabParamList>();
 
@@ -45,11 +44,11 @@ export default () => {
       />
       <MainTab.Screen
         name="Status"
-        component={TabTwoNavigator}
+        component={ChatScreenNavigator}
       />
       <MainTab.Screen
         name="Calls"
-        component={TabTwoNavigator}
+        component={ChatScreenNavigator}
       />
     </MainTab.Navigator>
   );
@@ -63,30 +62,14 @@ function TabBarIcon(props: { name: string; color: string }) {
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>();
+const ChatStack = createStackNavigator<ChatTabParamList>();
 
-function ChatScreenNavigator() {
-  return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="ChatScreen"
-        component={ChatScreen}
-        options={{ headerTitle: 'Tab One Title' }}
-      />
-    </TabOneStack.Navigator>
-  );
-}
-
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
-
-function TabTwoNavigator() {
-  return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
-      />
-    </TabTwoStack.Navigator>
-  );
-}
+const ChatScreenNavigator = () => (
+  <ChatStack.Navigator>
+    <ChatStack.Screen
+      name="Chat"
+      component={ChatScreen}
+      options={{ headerTitle: 'Chat' }}
+    />
+  </ChatStack.Navigator>
+);

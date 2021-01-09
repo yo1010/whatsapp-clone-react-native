@@ -1,18 +1,20 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '../components/EditScreenInfo';
+import { StyleSheet, FlatList } from 'react-native';
+import ChatListItem from '../components/ChatListItem';
 import { Text, View } from '../components/Themed';
+import chatRooms from '../chatRooms';
 
 export default () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabOneScreen.tsx" />
+      <FlatList
+        data={chatRooms}
+        renderItem={({ item }) => <ChatListItem chatRoom={item} />}
+        keyExtractor={(item) => item.id}
+      />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
