@@ -5,7 +5,7 @@ import { Text } from 'react-native';
 
 const ChatRoomScreen = () => {
     const route = useRoute();
-    console.log(route)
+
     return (
         <Text>
             Chat Room
