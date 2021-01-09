@@ -4,7 +4,7 @@ import ChatListItem from '../components/ChatListItem';
 import { Text, View } from '../components/Themed';
 import chatRooms from '../chatRooms';
 
-export default () => {
+const ChatScreen = () => {
   return (
     <View style={styles.container}>
       <FlatList
@@ -15,6 +15,8 @@ export default () => {
     </View>
   );
 };
+
+export default ChatScreen;
 
 const styles = StyleSheet.create({
   container: {
