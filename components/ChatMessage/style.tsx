@@ -5,7 +5,6 @@ const styles = StyleSheet.create({
     container: {
         padding: 10
     },
-
     messageBox: {
         marginRight: 50,
         borderRadius: 5,
