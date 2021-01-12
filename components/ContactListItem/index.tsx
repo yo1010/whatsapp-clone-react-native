@@ -14,16 +14,16 @@ const ContactListItem = ({ user }: Props) => {
     const handlePress = () => navigation.navigate('ChatRoom', { user: user });
     return (
         <TouchableWithoutFeedback onPress={handlePress}>
-        <View style={style.container}>
-            <View style={style.leftContainer}>
-                <Image source={{ uri: user.imageUri }} style={style.avatar}/>
-    
-                <View style={style.midContainer}>
-                    <Text style={style.username}>{user.name}</Text>
-                    <Text numberOfLines={2} style={style.status}>{user.status}</Text>
+            <View style={style.container}>
+                <View style={style.leftContainer}>
+                    <Image source={{ uri: user.imageUri }} style={style.avatar}/>
+
+                    <View style={style.midContainer}>
+                        <Text style={style.username}>{user.name}</Text>
+                        <Text numberOfLines={2} style={style.status}>{user.status}</Text>
+                    </View>
                 </View>
             </View>
-        </View>
         </TouchableWithoutFeedback>
     )
 };
