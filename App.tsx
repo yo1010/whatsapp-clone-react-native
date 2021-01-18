@@ -7,10 +7,13 @@ import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 
-import Amplify, { Auth } from 'aws-amplify';
+import Amplify, { API, Auth, graphqlOperation } from 'aws-amplify';
 import config from './aws-exports';
+import { getUser } from './graphql/queries';
+import { createUser } from './graphql/mutations';
+import { apisAreAvailable } from 'expo';
 
-Amplify.configure(config)
+Amplify.configure(config);
 
 const App = () => {
   const isLoadingComplete = useCachedResources();
@@ -19,9 +22,30 @@ const App = () => {
   useEffect(() => {
     const fetchUser = async () => {
       //get auth user from auth 
-      const auth = await Auth.currentAuthenticatedUser({ bypassCache: true });
+      const user = await Auth.currentAuthenticatedUser({ bypassCache: true });
 
-      console.log(auth)
+      console.log(user.attributes.sub)
+
+      if (user) {
+        const userData = API.graphql(graphqlOperation(getUser,
+          { variables: { id: user.attributes.sub } }));
+
+        if (userData.data.getUser) {
+          console.log('user is in database');
+          return;
+        } else {
+          const newUser = {
+            id: user.attributes.sub,
+            name: user.username,
+            imageUri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/2.jpg',
+            status: 'Hey, I am using whatsapp',
+          };
+          console.log(newUser)
+
+          await API.graphql(graphqlOperation(createUser,
+            { variables: { input: newUser } }));
+        }
+      }
       //get user from BE with id from auth
 
       //if no user in db --> create one
