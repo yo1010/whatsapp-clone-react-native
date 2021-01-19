@@ -3,7 +3,7 @@
 // this is an auto generated file. This will be overwritten
 
 export const getUser = /* GraphQL */ `
-  query GetUser($id: ID!) {
+  query GetUser($id: String!) {
     getUser(id: $id) {
       id
       name

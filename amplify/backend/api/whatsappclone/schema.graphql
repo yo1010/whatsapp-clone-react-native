@@ -1,5 +1,5 @@
 type User @model {
-  id: ID!
+  id: String!
   name: String!
   imageUri: String
   status: String

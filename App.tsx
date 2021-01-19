@@ -11,7 +11,6 @@ import Amplify, { API, Auth, graphqlOperation } from 'aws-amplify';
 import config from './aws-exports';
 import { getUser } from './graphql/queries';
 import { createUser } from './graphql/mutations';
-import { apisAreAvailable } from 'expo';
 
 Amplify.configure(config);
 
@@ -24,18 +23,20 @@ const App = () => {
       //get auth user from auth 
       const user = await Auth.currentAuthenticatedUser({ bypassCache: true });
 
-      console.log(user.attributes.sub)
+      const userId = user.attributes.sub;
 
       if (user) {
+        console.log(userId);
         const userData = API.graphql(graphqlOperation(getUser,
-          { variables: { id: user.attributes.sub } }));
+          { variables: { id: userId } }));
 
-        if (userData.data.getUser) {
+        if (userData.data && userData.data.getUser) {
           console.log('user is in database');
           return;
         } else {
+          console.log(userId);
           const newUser = {
-            id: user.attributes.sub,
+            id: userId,
             name: user.username,
             imageUri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/2.jpg',
             status: 'Hey, I am using whatsapp',
