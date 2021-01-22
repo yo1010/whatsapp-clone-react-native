@@ -23,28 +23,27 @@ const App = () => {
       //get auth user from auth 
       const user = await Auth.currentAuthenticatedUser({ bypassCache: true });
 
-      const userId = user.attributes.sub;
-
       if (user) {
-        console.log(userId);
-        const userData = API.graphql(graphqlOperation(getUser,
-          { variables: { id: userId } }));
+        const userData = await API.graphql(graphqlOperation(getUser, { id: user.attributes.sub }));
 
-        if (userData.data && userData.data.getUser) {
+        console.log('data', userData)
+
+        if (userData.data.getUser) {
           console.log('user is in database');
           return;
         } else {
           console.log(userId);
           const newUser = {
-            id: userId,
+            id: user.attributes.sub,
             name: user.username,
             imageUri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/2.jpg',
             status: 'Hey, I am using whatsapp',
           };
           console.log(newUser)
-
-          await API.graphql(graphqlOperation(createUser,
-            { variables: { input: newUser } }));
+          
+          if (newUser) {
+            await API.graphql(graphqlOperation(createUser, { input: newUser } ));
+          }
         }
       }
       //get user from BE with id from auth
